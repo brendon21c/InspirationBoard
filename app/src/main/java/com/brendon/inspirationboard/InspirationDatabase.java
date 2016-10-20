@@ -78,6 +78,7 @@ public class InspirationDatabase {
 
     }
 
+    // Closes the database.
     public void close() {
 
         helper.close();
@@ -100,6 +101,28 @@ public class InspirationDatabase {
         } catch (SQLiteConstraintException sqle) {
 
             Log.d(SQL_TAG, "Error inserting note into table.");
+            return false;
+        }
+
+    }
+
+    // Adds a new photo to the database.
+    public boolean addNewPhoto(byte[] image, String hashtag, long date) {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(PICTURE_COL, image);
+        contentValues.put(HASHTAG_COL, hashtag);
+        contentValues.put(DATE_COL, date);
+
+        try {
+
+            db.insertOrThrow(DB_TABLE, null, contentValues);
+
+            return true;
+
+        } catch (SQLiteConstraintException sqle) {
+
+            Log.d(SQL_TAG, "Error inserting photo into table.");
             return false;
         }
 
