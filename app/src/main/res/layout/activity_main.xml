@@ -11,8 +11,54 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.brendon.inspirationboard.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+        android:id="@+id/title_layout"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:text="List of Notes and Pictures"
+            android:layout_width="match_parent"
+            android:id="@+id/title_TV"
+            android:layout_height="20dp"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/title_layout"
+        android:layout_above="@+id/button_layout"
+        android:id="@+id/list_layout">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/full_list_view"
+            android:scrollIndicators="right"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_layout"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:text="Take a picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/picture_button"
+            android:layout_weight="1"/>
+
+        <Button
+            android:text="Create A Note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/note_button"
+            android:layout_weight="1"/>
+    </LinearLayout>
 </RelativeLayout>
