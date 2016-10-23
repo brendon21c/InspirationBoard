@@ -1,7 +1,9 @@
 package com.brendon.inspirationboard;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private Button mNoteButton;
     private ListView mFullList;
 
+    private static final int NOTE_CODE = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +37,27 @@ public class MainActivity extends AppCompatActivity {
         mFullList = (ListView) findViewById(R.id.full_list_view);
 
 
+        mNoteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+
+                startActivityForResult(intent, NOTE_CODE);
 
 
 
+            }
+        });
+
+
+
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
 
     }
