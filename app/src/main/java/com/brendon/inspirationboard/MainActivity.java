@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int NOTE_CODE = 1;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +47,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, NOTE_CODE);
 
 
-
             }
         });
+
+
 
 
 
