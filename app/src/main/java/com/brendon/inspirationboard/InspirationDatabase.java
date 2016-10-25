@@ -25,7 +25,7 @@ public class InspirationDatabase {
     protected static final int DB_VERSION = 1;
 
     // Column Names
-    protected static final String PRIMARY_KEY_COL = "Primary_Key";
+    protected static final String PRIMARY_KEY_COL = "_id";
     protected static final String PICTURE_COL = "Picture";
     protected static final String HASHTAG_COL = "Picture_Hash";
     protected static final String NOTES_COL = "Notes";

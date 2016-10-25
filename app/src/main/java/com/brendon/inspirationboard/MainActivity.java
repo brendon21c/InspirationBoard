@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView mFullList;
 
     private static final int NOTE_CODE = 1;
+    private static final int PIC_CODE = 2;
 
 
 
@@ -46,6 +47,17 @@ public class MainActivity extends AppCompatActivity {
 
                 startActivityForResult(intent, NOTE_CODE);
 
+
+            }
+        });
+
+        mPictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MainActivity.this, PhotoActivity.class);
+
+                startActivityForResult(intent, PIC_CODE);
 
             }
         });
