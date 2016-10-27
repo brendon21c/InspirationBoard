@@ -60,10 +60,11 @@ public class DatabaseListAdapter extends CursorAdapter {
         ImageView imageThumbnail = (ImageView) view.findViewById(R.id.photo_image);
 
 
-        byteArrayTemp = cursor.getBlob(PICTURE_COL);
 
 
         if (byteArrayTemp != null) {
+
+            byteArrayTemp = cursor.getBlob(PICTURE_COL);
 
             photo = getRawImage(byteArrayTemp);
             picHash = cursor.getString(HASTAG_COL);
@@ -78,17 +79,24 @@ public class DatabaseListAdapter extends CursorAdapter {
         }
 
 
-        noteShort = cursor.getString(NOTES_COL);
 
-        if (noteShort.length() > 100) {
+        if (noteShort != null) {
 
-            noteShort = noteShort.substring(0,99);
+            noteShort = cursor.getString(NOTES_COL);
+
+
+            if (noteShort.length() > 100) {
+
+                noteShort = noteShort.substring(0,99);
+
+            }
+
+            noteField.setText(cursor.getString(NOTES_COL));
+
+            noteShort = "";
+
 
         }
-
-        noteField.setText(cursor.getString(NOTES_COL));
-
-        noteShort = "";
 
 
 
