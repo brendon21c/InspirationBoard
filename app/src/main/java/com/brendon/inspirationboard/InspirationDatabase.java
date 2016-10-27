@@ -2,6 +2,7 @@ package com.brendon.inspirationboard;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -73,6 +74,8 @@ public class InspirationDatabase {
             onCreate(db);
             Log.w(SQL_HELPER, "Upgrade table - drop and recreate it");
 
+
+
         }
 
 
@@ -103,6 +106,14 @@ public class InspirationDatabase {
             Log.d(SQL_TAG, "Error inserting note into table.");
             return false;
         }
+
+    }
+
+    //  Gets all the data for the database.
+    public Cursor getAllData() {
+
+        Cursor cursor = db.query(DB_TABLE, null, null, null, null, null, DATE_COL + " DESC");
+        return cursor;
 
     }
 

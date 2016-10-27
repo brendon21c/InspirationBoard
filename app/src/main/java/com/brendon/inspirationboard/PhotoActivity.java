@@ -23,6 +23,7 @@ import java.util.Calendar;
 public class PhotoActivity extends AppCompatActivity {
 
     InspirationDatabase mInspirationDatabase;
+    PictureUtils mPictureUtils;
 
     private Context mContext;
     private File mImageFile;
