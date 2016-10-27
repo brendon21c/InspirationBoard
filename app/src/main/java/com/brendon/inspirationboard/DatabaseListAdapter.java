@@ -71,13 +71,24 @@ public class DatabaseListAdapter extends CursorAdapter {
             photoHashTV.setText(cursor.getString(HASTAG_COL));
             imageThumbnail.setImageBitmap(photo);
 
+            photo = null;
+            picHash = "";
+
 
         }
 
 
         noteShort = cursor.getString(NOTES_COL);
+
+        if (noteShort.length() > 100) {
+
+            noteShort = noteShort.substring(0,99);
+
+        }
+
         noteField.setText(cursor.getString(NOTES_COL));
-        notifyDataSetChanged();
+
+        noteShort = "";
 
 
 
