@@ -130,14 +130,9 @@ public class PhotoActivity extends AppCompatActivity {
 
             }
 
-
-
-
-
-
         }
-        //TODO I need to be able to get the photo as a Bitmap and store it in the database,
-        //TODO I'm stuck on how to do this.
+
+
     }
 
     public static byte[] getBytes(Bitmap bitmap) {

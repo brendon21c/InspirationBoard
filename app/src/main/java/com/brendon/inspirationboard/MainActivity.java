@@ -5,9 +5,11 @@ import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,7 +26,10 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int NOTE_CODE = 1;
     private static final int PIC_CODE = 2;
+    private static final int VIEWER_CODE = 3;
 
+    private static final String NOTE_KEY = "note key";
+    private static final String PHOTO_KEY = "photo key";
 
     public void updateList() {
 
@@ -48,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
         mNoteButton = (Button) findViewById(R.id.note_button);
         mFullList = (ListView) findViewById(R.id.full_list_view);
 
-        /*
+
         mCursor = mDatabaseManager.getAllData();
         mDatabaseListAdapter = new DatabaseListAdapter(this, mCursor, false);
         mFullList.setAdapter(mDatabaseListAdapter);
-        */
 
-        updateList();
+
+        //updateList();
 
 
         // Starts the note activity
@@ -82,6 +87,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        // User clicks to start viewr activity.
+        mFullList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                final TextView noteText = (TextView) view.findViewById(R.id.notes_text);
+                final TextView hashText = (TextView) view.findViewById(R.id.photo_hash);
+
+                String text = noteText.getText().toString();
+                String hash = hashText.getText().toString();
+
+                Intent intent = new Intent(MainActivity.this, FragmentActivityViewer.class);
+
+                intent.putExtra(NOTE_KEY, text);
+
+                startActivityForResult(intent, VIEWER_CODE);
+
+            }
+        });
 
 
 

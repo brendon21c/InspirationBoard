@@ -68,6 +68,7 @@ public class DatabaseListAdapter extends CursorAdapter {
 
 
             photo = getRawImage(byteArrayTemp);
+
             picHash = cursor.getString(HASTAG_COL);
 
             photoHashTV.setText(cursor.getString(HASTAG_COL));
@@ -85,10 +86,13 @@ public class DatabaseListAdapter extends CursorAdapter {
 
         if (noteShort != null) {
 
+            imageThumbnail.setImageDrawable(null);
+
 
             if (!noteShort.isEmpty()) {
 
 
+                // This returns the first 100 characters of note if it's longer than that.
                 if (noteShort.length() > 100) {
 
                     noteShort = noteShort.substring(0, 99);
@@ -108,6 +112,8 @@ public class DatabaseListAdapter extends CursorAdapter {
 
             }
         }
+
+
 
 
 

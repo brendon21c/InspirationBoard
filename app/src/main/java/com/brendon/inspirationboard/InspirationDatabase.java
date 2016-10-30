@@ -117,6 +117,55 @@ public class InspirationDatabase {
 
     }
 
+    public List getNote(String note) {
+
+        List noteList = new ArrayList();
+
+        String cols[] = { NOTES_COL, DATE_COL };
+
+        String where = NOTES_COL + " LIKE ? ";
+
+        String whereArgs[] = { "%" + note + "%" };
+
+        Cursor cursor = db.query(DB_TABLE, cols, where, whereArgs, null, null, null );
+
+        String fullNote = "";
+        long date = 0;
+
+        try {
+
+            cursor.moveToFirst();
+
+            while (!cursor.isAfterLast()) {
+
+                fullNote = cursor.getString(cursor.getColumnIndex(NOTES_COL));
+
+                date = cursor.getLong(cursor.getColumnIndex(DATE_COL));
+
+                noteList.add(fullNote);
+                noteList.add(date);
+
+                if (noteList.size() == 2) {
+
+                    break;
+
+                } else {
+
+                    cursor.moveToNext();
+
+                }
+
+            }
+
+        } finally{
+
+            cursor.close();
+        }
+
+        return noteList;
+
+    }
+
     // Adds a new photo to the database.
     public boolean addNewPhoto(byte[] image, String hashtag, long date) {
 
