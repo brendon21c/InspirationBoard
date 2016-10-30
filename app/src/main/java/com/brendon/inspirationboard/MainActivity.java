@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int NOTE_CODE = 1;
     private static final int PIC_CODE = 2;
-    private static final int VIEWER_CODE = 3;
+    private static final int VIEWER_CODE = 3; // Code for the fragment viewer
 
     private static final String NOTE_KEY = "note key";
     private static final String PHOTO_KEY = "photo key";
@@ -99,11 +99,27 @@ public class MainActivity extends AppCompatActivity {
                 String text = noteText.getText().toString();
                 String hash = hashText.getText().toString();
 
-                Intent intent = new Intent(MainActivity.this, FragmentActivityViewer.class);
+                if (text != "") {
 
-                intent.putExtra(NOTE_KEY, text);
 
-                startActivityForResult(intent, VIEWER_CODE);
+                    Intent intent = new Intent(MainActivity.this, FragmentActivityViewer.class);
+
+                    intent.putExtra(NOTE_KEY, text);
+
+                    startActivityForResult(intent, VIEWER_CODE);
+
+                } else {
+
+                    Intent intent = new Intent(MainActivity.this, FragmentActivityViewer.class);
+
+                    intent.putExtra(PHOTO_KEY, hash);
+
+                    startActivityForResult(intent, VIEWER_CODE);
+
+                }
+
+
+
 
             }
         });

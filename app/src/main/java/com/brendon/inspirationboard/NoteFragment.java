@@ -29,6 +29,9 @@ public class NoteFragment extends Fragment {
 
     private String mDateFormat;
 
+    private long mDateLong;
+
+
 
     InspirationDatabase mDatabase;
 
@@ -55,15 +58,26 @@ public class NoteFragment extends Fragment {
 
         String fullNote = noteList.get(0).toString();
 
-        long dateLong = (long) noteList.get(1);
+        mDateLong = (long) noteList.get(1);
 
-        String dateFormat = getDateFormat(dateLong);
+        mDateFormat = getDateFormat(mDateLong);
 
-        mDate.setText(dateFormat);
+        mDate.setText(mDateFormat);
 
         mNoteDisplay.setText(fullNote);
 
 
+        mUpdateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String newNote = mNoteDisplay.getText().toString();
+
+                mDatabase.updateNote(newNote, mDateLong);
+                getActivity().getSupportFragmentManager().popBackStack();
+
+            }
+        });
 
 
 

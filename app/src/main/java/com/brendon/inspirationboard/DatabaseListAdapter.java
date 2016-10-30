@@ -86,6 +86,7 @@ public class DatabaseListAdapter extends CursorAdapter {
 
         if (noteShort != null) {
 
+            photoHashTV.setText(null);
             imageThumbnail.setImageDrawable(null);
 
 

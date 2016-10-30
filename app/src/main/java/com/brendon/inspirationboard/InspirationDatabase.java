@@ -117,6 +117,37 @@ public class InspirationDatabase {
 
     }
 
+
+    public byte[] getPhoto(String hashTag) {
+
+        byte[] photo = new byte[0];
+
+        String cols[] = { PICTURE_COL };
+
+        String where = HASHTAG_COL + " = ? ";
+
+        String whereArgs[] = { hashTag };
+
+        Cursor cursor = db.query(DB_TABLE, cols, where, whereArgs, null, null, null);
+
+        try {
+
+            cursor.moveToFirst();
+
+            photo = cursor.getBlob(cursor.getColumnIndex(PICTURE_COL));
+
+
+
+        } finally {
+
+            cursor.close();
+        }
+
+        return photo;
+
+    }
+
+    // Returns the full text note and the date it was created to the NoteFragment.
     public List getNote(String note) {
 
         List noteList = new ArrayList();
@@ -163,6 +194,30 @@ public class InspirationDatabase {
         }
 
         return noteList;
+
+    }
+
+
+    public boolean updateNote(String newNote, long dateCreated) {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NOTES_COL, newNote);
+
+        String where = DATE_COL + " = ? ";
+
+        String[] whereArgs = { Long.toString(dateCreated) };
+
+        int rowMod = db.update(DB_TABLE, contentValues, where, whereArgs);
+
+        if (rowMod == 1) {
+
+            return true;
+
+        } else {
+
+            return false;
+
+        }
 
     }
 

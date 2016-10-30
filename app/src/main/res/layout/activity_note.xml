@@ -16,19 +16,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/note_title"
-        android:layout_weight="1"/>
+        android:layout_weight="1"
+        android:padding="10dp"/>
 
     <EditText
         android:layout_width="match_parent"
+        android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/note_entry"
-        android:layout_weight="1"
-        android:layout_below="@+id/note_title"
-        android:scrollIndicators="right"
         android:layout_height="wrap_content"
-        android:scrollbarAlwaysDrawVerticalTrack="false"
-        android:singleLine="false"
-        android:inputType="textImeMultiLine"/>
+        android:padding="10dp"
+        android:layout_below="@+id/note_title"/>
 
     <Button
         android:text="Add Note"
@@ -37,5 +35,5 @@
         android:id="@+id/add_note_button"
         android:layout_below="@+id/note_entry"
         android:layout_alignParentBottom="false"
-        />
+        android:padding="10dp"/>
 </RelativeLayout>
