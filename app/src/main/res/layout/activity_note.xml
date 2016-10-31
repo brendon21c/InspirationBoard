@@ -26,7 +26,9 @@
         android:id="@+id/note_entry"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:layout_below="@+id/note_title"/>
+        android:layout_below="@+id/note_title"
+        android:background="@color/light_grey"
+        android:cursorVisible="true"/>
 
     <Button
         android:text="Add Note"

@@ -8,6 +8,7 @@ import android.graphics.Point;
 
 
 // This class will scale down the image to thumbnail size.
+// I haven;t figured out how to use this class properly.
 
 public class PictureUtils {
 

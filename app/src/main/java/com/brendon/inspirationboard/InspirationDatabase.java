@@ -117,6 +117,21 @@ public class InspirationDatabase {
 
     }
 
+    // Search query for user from the search field.
+    public Cursor getSearchData(String search) {
+
+
+        String where = HASHTAG_COL + " LIKE  ? " + " OR " + NOTES_COL + " LIKE ? ";
+
+        String whereArgs[] = { "%" + search + "%" , "%" + search + "%"};
+
+        Cursor cursor = db.query(DB_TABLE, null, where, whereArgs, null, null, null );
+
+        return cursor;
+    }
+
+
+
 
     public byte[] getPhoto(String hashTag) {
 
@@ -196,6 +211,29 @@ public class InspirationDatabase {
         return noteList;
 
     }
+
+    public void deletePhoto(String tag) {
+
+        String where = HASHTAG_COL + " = ? ";
+
+        String[] whereArgs = { tag };
+
+        db.delete(DB_TABLE, where, whereArgs);
+
+
+    }
+
+    public void deletNoteEntry(String note) {
+
+
+        String where = NOTES_COL + " LIKE ? ";
+
+        String whereArgs[] = { "%" + note + "%" };
+
+        db.delete(DB_TABLE, where, whereArgs);
+
+    }
+
 
 
     public boolean updateNote(String newNote, long dateCreated) {

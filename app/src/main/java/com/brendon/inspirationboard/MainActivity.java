@@ -1,12 +1,17 @@
 package com.brendon.inspirationboard;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,9 +24,13 @@ public class MainActivity extends AppCompatActivity {
 
     Cursor mCursor;
 
+    Context mContext;
+
     private TextView mListTitle;
-    private Button mPictureButton;
-    private Button mNoteButton;
+    private ImageButton mPictureButton;
+    private ImageButton mNoteButton;
+    private ImageButton mSearchButton;
+    private EditText mSearchField;
     private ListView mFullList;
 
     private static final int NOTE_CODE = 1;
@@ -41,6 +50,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void updateListSearch(String search) {
+
+        mCursor = mDatabaseManager.getSearchData(search);
+        mDatabaseListAdapter = new DatabaseListAdapter(this, mCursor, false);
+        mFullList.setAdapter(mDatabaseListAdapter);
+
+
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +67,13 @@ public class MainActivity extends AppCompatActivity {
 
         mDatabaseManager = new InspirationDatabase(this);
 
+
         mListTitle = (TextView) findViewById(R.id.title_TV);
-        mPictureButton = (Button) findViewById(R.id.picture_button);
-        mNoteButton = (Button) findViewById(R.id.note_button);
+        mPictureButton = (ImageButton) findViewById(R.id.camera_button);
+        mNoteButton = (ImageButton) findViewById(R.id.note_button);
+        mSearchButton = (ImageButton) findViewById(R.id.find_results_button);
         mFullList = (ListView) findViewById(R.id.full_list_view);
+        mSearchField = (EditText) findViewById(R.id.search_field_entry);
 
 
         mCursor = mDatabaseManager.getAllData();
@@ -61,6 +83,18 @@ public class MainActivity extends AppCompatActivity {
 
         //updateList();
 
+
+        // Runs the search query.
+        mSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String searchEntry = mSearchField.getText().toString();
+                updateListSearch(searchEntry);
+                mSearchField.setText("");
+
+            }
+        });
 
         // Starts the note activity
         mNoteButton.setOnClickListener(new View.OnClickListener() {
@@ -124,11 +158,94 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Deletes the records from the database.
+        mFullList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
+                final TextView noteText = (TextView) view.findViewById(R.id.notes_text);
+                final TextView hashText = (TextView) view.findViewById(R.id.photo_hash);
+
+                String text = noteText.getText().toString();
+                String hash = hashText.getText().toString();
+
+
+                if (text != "") {
+
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setMessage("Delete this entry?");
+                   // builder.setCancelable(false);
+
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int i) {
+
+                            String text = noteText.getText().toString();
+                            mDatabaseManager.deletNoteEntry(text);
+                            updateList();
+                            //dialog.dismiss();
+
+                        }
+                    });
+
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int i) {
+
+                            dialog.dismiss();
+
+                        }
+                    });
+
+
+                    AlertDialog builder1 = builder.create();
+                    builder1.show();
+                    return true;
+
+
+                } else {
+
+                    final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    builder.setMessage("Delete this entry?");
+                    builder.setCancelable(false);
+
+                    builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int i) {
+
+                            String hash = hashText.getText().toString();
+                            mDatabaseManager.deletePhoto(hash);
+                            updateList();
+                            //dialog.dismiss();
+
+                        }
+                    });
+
+                    builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int i) {
+
+                            dialog.cancel();
 
 
 
+                        }
+                    });
+
+                    AlertDialog builder1 = builder.create();
+                    builder1.show();
+                    return true;
+
+
+                }
+
+
+            }
+        });
 
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -155,8 +272,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
-
-
-
+        mDatabaseManager = new InspirationDatabase(this);
+        updateList();
+    }
 }

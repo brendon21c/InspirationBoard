@@ -105,11 +105,13 @@ public class PhotoActivity extends AppCompatActivity {
 
         if (requestCode == TAKE_PICTURE && resultCode == RESULT_OK) {
 
+
             BitmapFactory.Options bOptions = new BitmapFactory.Options();
             bOptions.inJustDecodeBounds = false;
-            bOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            //bOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
 
             BitmapFactory.decodeFile(mImageFileName, bOptions);
+
 
             Bitmap bmp = BitmapFactory.decodeFile(mImageFileName, bOptions);
 
