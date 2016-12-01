@@ -75,7 +75,9 @@ public class PhotoActivity extends AppCompatActivity {
 
                         mImageFileName = mImageFile.getAbsolutePath();
 
-                        mFileUri = Uri.fromFile(mImageFile);
+                          //mFileUri = Uri.fromFile(mImageFile);
+                        mFileUri = FileProvider.getUriForFile(PhotoActivity.this, "com.brendon.inspirationboard", mImageFile);
+
 
                     } catch (IOException ioe) {
 
